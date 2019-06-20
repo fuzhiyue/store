@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+
+	<!-- 新增收货地址 -->
+	<!-- Integer insert(Address address) -->
+	<insert id="insert"
+		parameterType="cn.tedu.store.entity.Address"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO t_address (
+			uid,
+			recv_name,
+			recv_province,
+			recv_city,
+			recv_area,
+			recv_district,
+			recv_address,
+			recv_phone,
+			recv_tel,
+			recv_zip,
+			recv_tag,
+			is_default, 
+			created_user,
+			created_time,
+			modified_user,
+			modified_time
+		) VALUES (
+			#{uid},
+			#{recvName},
+			#{recvProvince},
+			#{recvCity},
+			#{recvArea},
+			#{recvDistrict},
+			#{recvAddress},
+			#{recvPhone},
+			#{recvTel},
+			#{recvZip},
+			#{recvTag},
+			#{isDefault},
+			#{createdUser},
+			#{createdTime},
+			#{modifiedUser},
+			#{modifiedTime}
+		)
+	</insert>
+	
+	<!-- 获取某个用户的收货地址列表 -->
+	<!-- List<Address> getAddressList(Integer uid) -->
+	<select id="getAddressList" 
+		resultType="cn.tedu.store.entity.Address">
+	    SELECT 
+	        id,
+	        uid,
+			recv_name recvName,
+			recv_province recvProvince,
+			recv_city recvCity,
+			recv_area recvArea,
+			recv_district recvDistrict,
+			recv_address recvAddress,
+			recv_phone recvPhone,
+			recv_tel recvTel,
+			recv_zip recvZip,
+			recv_tag recvTag,
+			is_default isDefault
+	 	FROM 
+	        t_address 
+	    WHERE 
+	        uid=#{uid} 
+	    ORDER BY 
+	        is_default DESC, modified_time DESC
+	</select>
+	
+	<!-- 获取某用户的收货地址数量 -->
+	<!-- Integer getAddressCountByUid(Integer uid) -->
+	<select id="getAddressCountByUid"
+		resultType="java.lang.Integer">
+		SELECT COUNT(id) 
+		FROM t_address 
+		WHERE uid=#{uid}
+	</select>
+	
+	<!-- 设置收货地址是否为默认 -->
+	<!-- Integer setDefault(
+			@Param("uid") Integer uid, 
+			@Param("id") Integer id, 
+			@Param("isDefault") Integer isDefault) -->
+	<update id="setDefault">
+		UPDATE 
+			t_address 
+		SET 
+			is_default=#{isDefault} 
+		WHERE 
+			uid=#{uid}
+			
+			<if test="id != null">
+			 AND id=#{id}
+			</if>
+	</update>
+	
+	<!-- 根据id获取收货地址信息 -->
+	<!-- Address getAddressById(Integer id) -->
+	<select id="getAddressById" 
+		resultType="cn.tedu.store.entity.Address">
+	    SELECT 
+			recv_name recvName,
+			recv_district recvDistrict,
+			recv_address recvAddress,
+			recv_phone recvPhone
+	 	FROM 
+	        t_address 
+	    WHERE 
+	        id=#{id} 
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

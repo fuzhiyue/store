@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.GoodsMapper">
+
+	<!-- 获取热销商品列表 -->
+	<!-- List<Goods> getHotGoodsList(
+			@Param("categoryId") Long categoryId, 
+			@Param("count") Integer count) -->
+	<select id="getHotGoodsList"
+		resultType="cn.tedu.store.entity.Goods">
+		SELECT 
+			id,
+			category_id AS categoryId,
+			item_type AS itemType,
+			title,
+			sell_point AS sellPoint,
+			price,
+			num,
+			image
+		FROM 
+			t_goods 
+		WHERE 
+			category_id=#{categoryId}
+			AND status=1
+		ORDER BY 
+			priority DESC
+		LIMIT 
+			0, #{count}
+	</select>
+	
+	<!-- 根据分类id获取商品列表 -->
+	<!-- List<Goods> getListByCategoryId(
+			@Param("categoryId") Long categoryId,
+			@Param("offset") Integer offset,
+			@Param("count") Integer count) -->
+	<select id="getListByCategoryId"
+		resultType="cn.tedu.store.entity.Goods">
+		SELECT 
+			id, title, 
+			sell_point AS sellPoint, 
+			price, num, image
+		FROM 
+			t_goods
+		WHERE 
+			category_id=#{categoryId} 
+			AND status=1
+		ORDER 
+			BY priority DESC
+		LIMIT 
+			#{offset}, #{count}
+	</select>
+	
+	<!-- 获取某个分类下的商品的数量 -->
+	<!-- Integer getCountByCategoryId(Long categoryId) -->
+	<select id="getCountByCategoryId"
+		resultType="java.lang.Integer">
+		SELECT 
+			COUNT(id)
+		FROM 
+			t_goods
+		WHERE 
+			category_id=#{categoryId} 
+			AND status=1
+	</select>
+	
+	<!-- 根据商品id获取商品信息 -->
+	<!-- Goods getGoodsById(Long id) -->
+	<select id="getGoodsById"
+		resultType="cn.tedu.store.entity.Goods">
+		SELECT 
+			id, 
+			category_id AS categoryId,
+			item_type AS itemType,
+			title,
+			sell_point AS sellPoint,
+			price, num, barcode, image
+		FROM 
+		    t_goods
+		WHERE 
+		    id=#{id} AND status=1
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

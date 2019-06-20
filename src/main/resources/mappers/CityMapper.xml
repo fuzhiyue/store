@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.CityMapper">
+
+	<!-- 获取某个省的所有市的列表 -->
+	<!-- List<City> getCityListByProvinceCode(
+			String provinceCode) -->
+	<select id="getCityListByProvinceCode"
+		resultType="cn.tedu.store.entity.City">
+		SELECT 
+			id, 
+			province_code AS provinceCode, 
+			city_name AS name,
+			city_code AS code
+		FROM 
+			t_dict_cities 
+		WHERE
+			province_code=#{provinceCode}
+		ORDER BY 
+			city_code
+	</select>
+	
+	<!-- 根据市的代号获取市的信息 -->
+	<!-- City getCityByCode(String cityCode) -->
+	<select id="getCityByCode"
+		resultType="cn.tedu.store.entity.City">
+		SELECT 
+			id, 
+			province_code AS provinceCode, 
+			city_name AS name,
+			city_code AS code
+		FROM 
+			t_dict_cities
+		WHERE
+			city_code=#{cityCode}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.CartMapper">
+
+	<!-- 向购物车表中添加数据 -->
+	<!-- Integer insert(Cart cart) -->
+	<insert id="insert"
+		parameterType="cn.tedu.store.entity.Cart"
+		useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO t_cart (
+			uid, goods_id,
+			goods_image, goods_title,
+			goods_price, goods_num,
+			created_user, created_time,
+			modified_user, modified_time
+		) VALUES (
+			#{uid}, #{goodsId},
+			#{goodsImage}, #{goodsTitle},
+			#{goodsPrice}, #{goodsNum},
+			#{createdUser}, #{createdTime},
+			#{modifiedUser}, #{modifiedTime}
+		)
+	</insert>
+	
+	<!-- 修改购物车中某用户的某商品的数量 -->
+	<!-- Integer changeGoodsNum(
+			@Param("id") Integer id, 
+			@Param("goodsNum") Integer goodsNum) -->
+	<update id="changeGoodsNum">
+		UPDATE 
+			t_cart 
+		SET 
+			goods_num=#{goodsNum}
+		WHERE 
+			id=#{id}
+	</update>
+	
+	<!-- 根据用户id和商品id，获取购物车中的数据 -->
+	<!-- Cart getCartByUidAndGoodsId(
+			@Param("uid") Integer uid, 
+			@Param("goodsId") Long goodsId) -->
+	<select id="getCartByUidAndGoodsId"
+		resultType="cn.tedu.store.entity.Cart">
+		SELECT 
+			id, goods_num AS goodsNum
+		FROM 
+			t_cart 
+		WHERE 
+			uid=#{uid} AND goods_id=#{goodsId}
+	</select>
+	
+	<!-- 获取某用户的购物车数据列表 -->
+	<!-- List<Cart> getListByUid(Integer uid) -->
+	<select id="getListByUid"
+		resultType="cn.tedu.store.entity.Cart">
+		SELECT 
+			id, 
+			goods_id AS goodsId,
+			goods_image AS goodsImage,
+			goods_title AS goodsTitle,
+			goods_price AS goodsPrice,
+			goods_num AS goodsNum
+		FROM 
+			t_cart 
+		WHERE 
+			uid=#{uid}
+		ORDER BY id DESC
+	</select>
+	
+	<!-- 根据数据id获取购物车数据 -->
+	<!-- Cart getCartById(Integer id) -->
+	<select id="getCartById"
+		resultType="cn.tedu.store.entity.Cart">
+		SELECT 
+			id, 
+			goods_id AS goodsId,
+			goods_image AS goodsImage,
+			goods_title AS goodsTitle,
+			goods_price AS goodsPrice,
+			goods_num AS goodsNum
+		FROM 
+			t_cart 
+		WHERE 
+			id=#{id}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

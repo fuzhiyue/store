@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.GoodsCategoryMapper">
+
+	<!-- 根据商品分类的父级id，获取商品分类的列表 -->
+	<!-- List<GoodsCategory> getListByParentId(Long parentId) -->
+	<select id="getListByParentId"
+		resultType="cn.tedu.store.entity.GoodsCategory">
+	    SELECT 
+	        id, 
+	        parent_id AS parentId,
+	        name,
+	        status, 
+	        sort_order AS sortOrder, 
+	        is_parent AS isParent
+	    FROM 
+	        t_goods_category 
+	    WHERE 
+	        parent_id=#{parentId}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
